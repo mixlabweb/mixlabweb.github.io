@@ -1,0 +1,25 @@
+{{ partial "header.html" . }}
+
+{{if not .IsHome }}
+    <h1 class="page-title" style="margin-bottom: 1.5rem;">{{ .Title }}</h1>
+{{ end }}
+<div class="markdown">
+    {{ .Content }}
+    <hr/>
+</div>
+
+<div>
+    <ul class="list">
+        {{ if .IsHome }}{{ $pages := .Site.RegularPages }}{{ end }}
+        {{ $pages := .Paginator.Pages }}
+        {{ range (where $pages "Section" "!=" "") }}
+            <li class="list-item">
+                {{ .Render "summary" }}
+            </li>
+        {{ end }}
+    </ul>
+    {{ template "_internal/pagination.html" . }}
+
+</div>
+
+{{ partial "footer.html" . }}

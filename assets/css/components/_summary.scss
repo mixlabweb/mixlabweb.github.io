@@ -1,0 +1,37 @@
+@import "../variables";
+
+.summary {}
+
+.summary-meta {}
+
+.summary-meta-details {
+  display: flex;
+  gap: 1rem;
+
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: var(--gray11);
+  font-size: $font-size-sm;
+
+  .post-author {
+    text-transform: uppercase;
+  }
+
+  .post-date {
+
+  }
+}
+
+.summary-title {
+  font-size: $font-size-h2;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+
+  a {
+    &:hover {
+      color: var(--blue11);
+    }
+    text-decoration: none;
+    color: var(--gray12);
+  }
+}

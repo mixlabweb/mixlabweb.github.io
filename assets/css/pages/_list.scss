@@ -1,0 +1,12 @@
+@import "../mixins";
+
+.list {
+}
+
+.list-item {
+  margin-top: 1.5rem;
+  &:hover {
+    box-shadow: 0 0 0 0.5rem var(--gray3);
+    background-color: var(--gray3);
+  }
+}

@@ -1,0 +1,205 @@
+@import "../variables";
+
+article {
+  margin-top: 1rem;
+}
+
+.markdown {
+  color: var(--gray12);
+  margin-left: auto;
+  margin-right: auto;
+  font-kerning: normal;
+  font-size: $font-size-base;
+
+  //.katex-display {
+  //  //overflow-x: auto;
+  //  //overflow-y: hidden;
+  //}
+  .katex-display > .katex {
+    max-width: 100%;
+  }
+  .katex-display > .katex > .katex-html {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  span.katex {
+    .base {
+      padding-top: 4px;
+    }
+    white-space: inherit;
+  }
+
+  h1 {
+    font-weight: 600;
+    font-size: 1.5em;
+    line-height: 1em;
+    margin: 1em 0 0.5em 0;
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 1.3em;
+    line-height: 1em;
+    margin: 1em 0 0.4em 0;
+  }
+
+  h3 {
+    font-weight: 900;
+    font-size: 1em;
+    line-height: 1em;
+    margin: 1em 0 0.3em 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  a {
+    color: var(--blue11);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--blue9);
+    }
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--gray10);
+  }
+
+  a.bigbutton {
+    display: block;
+    margin: auto;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+    width: 30%;
+    min-width: 160px;
+    text-align: center;
+    font-size: $font-size-base;
+    padding: 1em;
+    background: var(--gray1);
+    border: 2px solid var(--gray12);
+    border-radius: 4px;
+    color: var(--gray12);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+  }
+
+  a.bigbutton:hover {
+    background: var(--gray12);
+    color: var(--gray1);
+  }
+
+  blockquote > p {
+    margin: 0;
+    padding: 0;
+  }
+
+  p, ul, ol, blockquote, figure {
+    font-size: 1em;
+    line-height: 1.35em;
+    margin-bottom: 1rem;
+    hyphens: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+
+  ol li, ul li {
+    display: list-item;
+    margin: 0.5em 0 0.5em 1em;
+  }
+
+  ol ol, ul ul, ol ul, ul ol {
+    padding-left: 18px;
+  }
+
+  ol {
+    list-style: outside decimal none;
+  }
+
+  ul {
+    list-style: outside disc none;
+
+    ul {
+      margin: 0;
+    }
+  }
+
+  pre, blockquote {
+    //border-top: 1px solid var(--gray6);
+    //border-bottom: 1px solid var(--gray6);
+    background-color: var(--gray3);
+    color: var(--gray12);
+    padding: 1em;
+    font-size: $font-size-base;
+    border-radius: 4px;
+    overflow: auto;
+    margin-bottom: 1rem;
+  }
+
+  // when two divs are side by side, add a 1rem margin between them
+  div + div {
+    margin-top: 1em;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  figure {
+    img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    figcaption {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    figcaption::before {
+      content: "Figure: ";
+      font-weight: 700;
+    }
+  
+  }
+
+  table {
+    img {
+      display: inline-block;
+      max-width: none;
+    }
+  }
+
+  table {
+    width: 100%;
+    text-align: center;
+    color: var(--gray12);
+    margin-bottom: 1rem;
+  }
+
+  th {
+    border-bottom: 1px solid var(--gray8);
+    font-weight: 700;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  th, td {
+    padding: 0.3em;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--gray3);
+  }
+}

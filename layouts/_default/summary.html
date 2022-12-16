@@ -1,0 +1,14 @@
+<article class="summary">
+    <div class="summary-meta">
+        <h2 class="summary-title"><a href='{{ .Permalink }}'> {{ .Title }}</a>
+        </h2>
+        <div class="summary-meta-details">
+            {{ .Date.Format "Mon, Jan 2, 2006" }} - {{ .FuzzyWordCount }} Words </div>
+        </div>
+    <div class="markdown">
+        <p>
+            {{ .Summary }}
+        </p>
+    </div>
+</article>
+

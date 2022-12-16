@@ -1,0 +1,63 @@
+baseurl: "https://mixlabweb.github.io"
+languageCode: "en-us"
+title: " Mix Lab"
+googleAnalytics: "G-R15X7YW1Z3"
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
+footnotereturnlinkcontents: "↩"
+paginate : 5
+
+permalinks:
+  note: "/note/:year/:month/:day/:slug/"
+  post: "/post/:year/:month/:day/:slug/"
+
+menu:
+  main:
+    - name: About
+      url: "about/"
+      weight: 1
+    - name: Posts
+      url: "post/"
+      weight: 3
+    - name: Categories
+      url: "categories/"
+      weight: 4
+    - name: Tags
+      url: "tags/"
+      weight: 5
+
+params:
+  description: "Mix Lab: Machine Intelligence with all eXperience"
+  headerText: " Mix Lab"
+  footer: "&copy; [Mix Lab](mixlabweb.github.io) 2019 -- {Year} | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) | [Subscribe](index.xml)"
+
+security:
+  exec:
+    allow:
+      - ^dart-sass-embedded$
+      - ^go$
+      - ^npx$
+      - ^postcss$
+      - ^pandoc$
+
+markup:
+  defaultMarkdownHandler: "pandoc"
+  highlight:
+    anchorLineNos: true
+    codeFences: true
+    guessSyntax: true
+    hl_Lines: ""
+    lineAnchors: ""
+    lineNoStart: 1
+    lineNos: false
+    lineNumbersInTable: true
+    noClasses: false
+    tabWidth: 4
+
+  tableOfContents:
+    endLevel: 3
+    ordered: true
+    startLevel: 1
+
+  goldmark:
+    renderer:
+      unsafe: true

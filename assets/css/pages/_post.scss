@@ -1,0 +1,60 @@
+@import "../variables";
+@import "../mixins";
+
+.post-meta {
+  border-bottom: 1px solid var(--gray11);
+
+  .post-meta-details {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    @include respond-to("small") {
+      gap: 1rem;
+      flex-direction: row;
+      align-items: center;
+    }
+    margin-bottom: 0.5rem;
+    color: var(--gray11);
+    font-size: $font-size-sm;
+
+    .post-author {
+      text-transform: uppercase;
+    }
+
+    .post-date {
+    }
+
+    .post-tags {
+      white-space: nowrap;
+
+      &:before {
+        display: inline;
+        content: "{"
+      }
+
+      &:after {
+        display: inline;
+        content: "}"
+      }
+
+      display: flex;
+      gap: 4px;
+      justify-content: left;
+    }
+
+    li:not(:last-child)::after {
+      content: ",";
+    }
+
+    a {
+      color: var(--gray11);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--blue10);
+      }
+    }
+
+  }
+}

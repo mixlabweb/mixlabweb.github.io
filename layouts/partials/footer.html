@@ -1,0 +1,31 @@
+</div>
+<footer class="markdown">
+  {{ partial "foot_custom.html" . }}
+  {{ with .Site.Params.footer }}
+  {{ replace . "{Year}" now.Year | markdownify}}
+  {{ end }}
+  </footer>
+  </body>
+  <script>
+    const switchTheme = document.getElementById('switch-theme');
+    switchTheme.addEventListener('click', () => {
+      document.body.classList.toggle('dark-theme');
+      document.body.classList.toggle('light-theme');
+      if (document.body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark-theme');
+      } else {
+        localStorage.setItem('theme', 'light-theme');
+      }
+    });
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '.toc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: '.markdown',
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: 'h1, h2, h3',
+      // For headings inside relative or absolute positioned containers within content.
+      hasInnerContainers: true,
+    });
+  </script>
+</html>

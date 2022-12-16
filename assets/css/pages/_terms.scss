@@ -1,0 +1,26 @@
+@import "../variables";
+
+.terms {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+  .term-item {
+    border-radius: 4px;
+    padding: 0.25rem;
+    background-color: var(--gray4);
+    cursor: pointer;
+    &:hover {
+      background-color: var(--gray5);
+    }
+  }
+  sub {
+    &:before {
+      content: "(";
+    }
+    &:after {
+      content: ")";
+    }
+    position: relative; bottom: 0; font-size: $font-size-sm;
+  }
+}

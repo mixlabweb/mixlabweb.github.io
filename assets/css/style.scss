@@ -1,0 +1,37 @@
+@import "reset";
+
+@import "fonts";
+@import "variables";
+@import "mixins";
+
+@import "layout/header";
+@import "layout/footer";
+
+@import "pages/post";
+@import "pages/home";
+@import "pages/terms";
+@import "pages/list";
+
+@import "components/common";
+@import "components/summary";
+@import "components/pagination";
+@import "components/toc";
+
+body {
+  background-color: var(--gray1);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  max-width: $page-width;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @include respond-to("small") {
+    padding: 0;
+  }
+}
+
+.content {
+  margin-top: 2rem;
+  flex: 1;
+}
