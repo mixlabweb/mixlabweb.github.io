@@ -10,7 +10,7 @@
             <ul class="post-tags">
                 {{ range . }}
                     <li>
-                        <a href="{{ "tags/" | absURL}}{{ . | urlize }}">{{ . }}</a>
+                        <a href="{{ "categories/" | absURL}}{{ . | urlize }}">{{ . }}</a>
                     </li>
                 {{ end }}
             </ul>

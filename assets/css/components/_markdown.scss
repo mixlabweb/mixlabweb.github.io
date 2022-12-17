@@ -55,6 +55,14 @@ article {
     letter-spacing: 0.1em;
   }
 
+  h4 {
+    font-weight: 600;
+    font-size: 1em;
+    line-height: 1em;
+    margin: 1em 0 0.3em 0;
+    // letter-spacing: 0.1em; 
+  }
+
   a {
     color: var(--blue11);
     text-decoration: none;
@@ -153,13 +161,15 @@ article {
   strong {
     font-weight: 700;
   }
-
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+  }
   figure {
-    img {
-      display: block;
-      margin: 0 auto;
-      max-width: 100%;
-    }
+
 
     figcaption {
       text-align: center;
