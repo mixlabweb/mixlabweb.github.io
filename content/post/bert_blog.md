@@ -13,49 +13,65 @@ tags:
 ![](/bertnet_1.png){width="5.463542213473316in"
 height="2.977536089238845in"}
 
-Knowledge graphs (KGs) encode rich knowledge about entities and their
-relationships, and have been one of the major means for organizing
-commonsense or domain-specific information to empower various
-applications, including search engines, recommendation systems,
-chatbots, healthcare, etc. Traditionally, a KG is constructed by
-expensive human crowdsourcing (WordNet, ConceptNet, ATOMIC...).
-Researchers have also explored automatic knowledge graph construction
-with text mining techniques, but it's still a quite heavy task due to
-the large corpus and complex pipelines. Besides, the involved relations
-are limited to only those covered by the selected corpus. In reality,
-people sometimes will not explicitly express knowledge in their
-language, because they are thought to be "common sense". Can we think of
-a method for knowledge graph construction that is both fully automatic
-and flexible enough to capture any relations?
+There has been a significant increase in the number of deep neural
+models that have achieved high levels of performance on various tasks
+across diverse domains, such as language generation with GPT-3 and
+ChatGPT, and medical prediction with bioBERT. These models have the
+ability to function as aggregators of information and organizers of
+diverse data examples and experiences due to the vast amount of
+knowledge and information that has been implicitly encoded within their
+parameters. For instance, a medical model trained on large-scale health
+records may have acquired a wealth of medical knowledge, allowing it to
+accurately predict diseases. Similarly, a pandemic prediction model with
+accurate trend simulation may have implicitly captured certain
+transmission patterns from the data it was trained on.
 
-In this work, we ask language models for help. For the past few years,
-we have seen the rapid growth of language models (LMs) these years (e.g.
-BERT, ROBERTA, and GPT-3). They have been shown to encode a large amount
-of implicit knowledge inside their parameters, which inspired the
-interest in using the LMs as knowledge bases (LAMA \[1\]). For example,
-one can query \"Obama was born in \" to a LM to get the answer
-\"Hawaii\". However, we are not satisfied with this usage because the
-black-box LMs, where knowledge is only implicitly encoded, fall short of
-the many nice properties of explicit KGs, such as the easiness of
-browsing the knowledge or even making updates and the explainability for
-trustworthy use by domain experts. Our work makes the first attempt to
-**automatically harvest KGs from the LMs**, with the goal to combine the
-best of both worlds, namely the flexibility and scalability from the
-neural LMs, and the access, editability, and explainability in the
-symbolic form.
+Knowledge graphs (KGs) are a useful tool for organizing and encoding
+rich symbolic knowledge about entities and their relationships, and have
+been applied in a variety of fields, including search engines,
+recommendation systems, chatbots, and healthcare. Traditionally, KGs
+have been constructed through expensive human crowdsourcing efforts
+(such as WordNet, ConceptNet, and ATOMIC). Researchers have also
+explored the use of text mining techniques for automatic KG
+construction, but this remains a challenging task due to the large
+corpus and complex processing required. Additionally, the relations
+captured in these KGs are limited to those covered by the selected
+corpus.
 
-BertNet framework
-=================
+On the other hand, large language models (LMs) such as BERT, RoBerta,
+and GPT-3, which are pretrained on massive text corpora, have
+demonstrated the ability to encode a significant amount of knowledge
+implicitly in their parameters. This has sparked interest in utilizing
+these LMs as knowledge bases, leading to the question: can we
+automatically harvest KGs from the LMs, and hence combine the best of
+both worlds, namely the flexibility and scalability from the neural LMs,
+and the access, editability, and explainability in the symbolic form?
+
+This work represents a step towards achieving this goal. Our automatic
+framework is able to efficiently and scalably extract a knowledge graph
+(KG) from a pretrained language model (LM) such as BERT or RoBerta,
+resulting in a family of new KGs (e.g., BertNet, RoBertaNet) that
+provide a broader and extendable set of relations and entities beyond
+those found in existing hand-annotated KGs like ConceptNet. This allows
+for the inclusion of a new and expandable set of knowledge.
+
+In the following, we'll briefly present our framework. Please refer to
+our [[paper]{.underline}](https://arxiv.org/pdf/2206.14268.pdf) for more
+details. We have released our code and the outcome KGs from on
+[[Github]{.underline}](https://github.com/tanyuqian/knowledge-harvest-from-lms/),
+and we also encourage everyone to try out our [[knowledge server
+demo]{.underline}](http://lmnet.io)!
+
+### Our framework to harvest KGs from LMs
 
 We first formulate the problem: given a description of a relation, we
 want to harvest entity tuples of this relation from a language model.
-Here, A relation is described as a prompt with entity slots. The
-relation is further disambiguated with a handful of example seed entity
-tuples. With these inputs, our framework is expected to output a list of
-entity tuples with confidence. (See Figure 1)
+Here, a relation is framed as a prompt with entity slots which is
+furtherdisambiguated with a handful of example seed entity tuples. With
+these inputs, our framework is expected to output a list of entity
+tuples with confidence (Figure 1).
 
-Compatibility Score
--------------------
+#### Compatibility Score
 
 Before we dive into the two main stages of our framework, we introduce
 the compatibility score between a prompt and an entity tuple.
@@ -64,15 +80,15 @@ $$
 f_{L M}(\langle h, t\rangle, p)=\\\alpha \log P_{L M}(h, t \mid p)+(1-\alpha) \min \left\{\log P_{L M}(h \mid p), \log P_{L M}(t \mid p, h)\right\}
 $$
 
-With Bert as an example, the left term is the probability of filling the
-entity tuple \<h, t\> into the slots in the prompt p. Typically, this
-joint conditional probability can be decomposed to \$P\_{LM}(h\|p)
-\\times P\_{LM}(t\|h,p)\$, which means it's computed in autoregressive
-style. Besides, we also want to make sure that the probability of each
-step shouldn't be too low, and that's the intuition behind the second
-term. A concrete example is shown in Figure 2, where p="A is the place
-for B", h="library" and t="study". We also present how to process
-multi-token entities where h="study room".
+With BERT as an example, the first term in the scoring function involves
+the probability of filling the entity tuple \$\<h, t\>\$ into the slots
+in the prompt \$p\$. Typically, this joint conditional probability can
+be decomposed to \$P\_{LM}(h\|p) \\times P\_{LM}(t\|h,p)\$, assuming
+it's computed in an autoregressive style. Besides, we also want to make
+sure that the probability of each step shouldn't be too low, and that's
+the intuition behind the second term. A concrete example is shown in
+Figure 2, where p="A is the place for B", h="library" and t="study". We
+also present how to process multi-token entities where h="study room".
 
 ![](/bertnet_2.png){width="6.5in" height="2.6527777777777777in"}
 
@@ -88,47 +104,48 @@ Stage 1: Prompt Creation
 
 A known deficiency of language models is their inconsistency when given
 different prompts. Sometimes even a slight difference in wording would
-cause a drastic change in prediction \[2\]. To this end, we want to
-generate multiple paraphrases of the input prompt, and use them to
-regularize the output of language models.
+cause a drastic change in the prediction results. To this end, we want
+to generate multiple paraphrases of the initial input prompt, and use
+them to regularize the output of language models.
 
-We iteratively sample entity tuples and prompts to assemble a statement
-and paraphrase it (Here we call the API of GPT-3). The process is shown
-in the left part of Figure 3. The generated prompts can be semantically
-drifted, so we weigh them by averaging the compatibility score between a
-prompt and each given seed entity tuple. The weights are further
-normalized with softmax across all prompts. The resulting weighted
-prompt set serves as a more reliable description of the relation.
+As our implementation, the algorithm iteratively samples entity tuples
+and prompts to assemble a statement and paraphrase it (specifically
+usingGPT-3 API). The process is shown in the left part of Figure 3. The
+generated prompts can be semantically drifted, so the prompts are
+weighted by the average compatibility scores between a prompt and all
+given seed entity tuples. The weights are further normalized with
+softmax across all prompts. The resulting weighted prompt set serves as
+a more reliable description of the relation.
 
 Stage 2: Entity Tuple Search
 ----------------------------
 
 Our goal in the following stage is to search for entity tuples that
-maximize compatibility with the weighted prompt set.
+achieves high compatibility with the weighted prompt set.
 
 $$
 \text{consistency} \left(\left\langle h^{\text {new }}, t^{\text {new }}\right\rangle\right)=\sum_p w_p \cdot f_{L M}\left(\left\langle h^{\text {new }}, t^{\text {new }}\right\rangle, p\right)
 $$
 
-Since the searching space is too large, we propose an approximation,
-that is to only use the minimum individual log-likelihoods (the left
-part of compatibility score, shortened as MLL) instead of the full
-equation. This allows us to apply an efficient pruning strategy.
+Since the entity search space is too large, we propose an approximation
+that only uses the minimum individual log-likelihoods (the left part of
+compatibility score, shortened as MLL) instead of the full equation.
+This cheaper scoring function allows fast rollouts by pruning.
 
 As a running example, when we are searching for 100 entity tuples, we
 maintain a minimum heap to keep track of the MLL of the existing entity
 pair set. The maximum size of this heap is 100, and the heap top can be
 used as a threshold for future search because it's the 100-th largest
 MLL: When we are searching for a new entity tuple, once we find the
-log-likelihood at any time step is lower than the threshold, we can
+log-likelihood at any timestamp is lower than the threshold, we can
 prune the continuous searching immediately because this means the MLL of
 this tuple will never surpass any existing tuples in the heap. If a new
-entity tuple is searched out without being pruned, we will pop the heap
-and push the MLL of the new tuple. Intuitively, the pruning process
-makes sure that the generated part of the tuple in searching is
-reasonable for the given prompt.
+entity tuple is reached without being pruned, we pop the heap and push
+the MLL of the new tuple. Intuitively, the pruning process makes sure
+that the generated part of the tuple in searching is reasonable for the
+given prompt.
 
-Once we collect a large number of proposed entity tuples, we re-rank
+Once we collect a large number of potential entity tuples, we re-rank
 them with the full compatibility score. We finally use various
 thresholds to get the outcome KGs in different scales, including (1)
 50%: taking half of all searched-out entities with higher scores. (2)
@@ -143,11 +160,11 @@ base-100 when k is 10 and 100, respectively.
 Outcome KGs
 ===========
 
-Different from traditional KGs, BertNet is extensible every time there
-is a new query. In essence, there is no limitation on the scalability of
-BertNet. In our evaluation, we ground our framework to a commonly used
-relation set from ConceptNet, and a New relation set composed of some
-novel relations the authors think of.
+Different from traditional KGs, BertNet is extensible in case a new
+query is desired.. In essence, there is no limitation on the scalability
+of BertNet. In our evaluation, we ground our framework to a commonly
+used relation set from ConceptNet, and a New relation set composed of
+some novel relations the authors think of.
 
 
 
@@ -182,14 +199,15 @@ Analysis of our framework
 
 We did another set of experiments to evaluate our prompt creation
 method. Looking at the top-100 tuples of New relations harvested with
-different prompts, we find that the paraphrasing-based method largely
-outperformed the previous few-shot learning method Autoprompt \[3\]. We
-also show that the ensemble of multiple prompts is better than only
-using human-written prompts or the top-1 prompts.
+different prompts, we found that the paraphrasing-based method
+outperformed the previous few-shot learning method Autoprompt by a large
+margin. We also show that utilizing an ensemble of multiple prompts
+performs better than only using human-written prompts or the top-1
+prompts.
 
-We also harvest KGs from 5 different LMs and evaluate them in the same
-setting. The results shed some new light on several knowledge-related
-questions regarding the LMs' knowledge capacity:
+We also harvested KGs from 5 different LMs and evaluated them in the
+same setting. The results shed some new light on several questions
+regarding the LMs' knowledge capacity:
 
 
 $$
@@ -221,8 +239,8 @@ same pretraining corpus and tasks, respectively, while the large version
 has a larger model architecture than the base version in terms of layers
 (24 v.s. 12), attention heads (16 v.s. 12), and the number of parameters
 (340M v.s. 110M). We can see that BertNet-large and RoBERTaNet-large are
-around 7% and 3% higher than their base version, separately, so the
-large models indeed encoded better knowledge than the base models.
+around 7% and 3% higher than their base version, respectively, so the
+large models indeed encode better knowledge than the base models.
 
 **Does better pretraining bring better knowledge?**
 
@@ -230,35 +248,26 @@ RoBERTa uses the same architecture as BERT but with better pretraining
 strategies, like dynamic masking, larger batch size, etc. In their
 extracted knowledge graphs from our framework, RoBERTaNet-large performs
 better than BertNet-large (0.73 v.s. 0.70), and RoBERTaNet-base is also
-better than BertNet-base (0.70 v.s. 0.63), which indicates the better
-pretraining indeed bring the better knowledge learning and storage.
+better than BertNet-base (0.70 v.s. 0.63). This indicates that better
+pretraining strategies indeed bring better knowledge learning and
+storage.
 
 **Is knowledge really kept in the knowledge distillation process?**
 
-DistilBERT is trained by distilling BERT-base, and reduces 40%
-parameters from it. Interestingly, the knowledge distillation process
-instead improves by around 4% of accuracy in the result knowledge graph.
-This might be because the knowledge distillation is able to remove some
-noisy information from the teacher model.
+DistilBERT is trained by distilling BERT-base reducing 40% parameters
+from it. Interestingly, the knowledge distillation process improves the
+harvested knowledge graph accuracy by around 4%.. This might be because
+the knowledge distillation is able to remove some noisy information from
+the teacher model.
 
 Summary
 =======
 
-In this work, we propose an automatic framework to extract a KG with
-arbitrary relations in an efficient and scalable way, and we apply this
-framework to harvest KGs from a wide range of popular LMs, indicating
-LMs alone can be good resources for KG construction. Our framework shows
-a new style beyond traditional work, and provides a fully symbolic
-interpretation to the LM, leading to new insights into the knowledge
-capability of LMs.
-
-Reference
-=========
-
-\[1\] Language Models as Knowledge Bases?, EMNLP 2019
-
-\[2\] Measuring and improving consistency in pretrained language models,
-TACL 2021
-
-\[3\] Eliciting knowledge from language models using automatically
-generated prompts, EMNLP 2020
+In this work, we present an automatic framework for extracting a
+knowledge graph (KG) with arbitrary relations in an efficient and
+scalable manner, and demonstrate its application in creating KGs from a
+variety of popular large language models (LMs). Our results indicate
+that LMs can be effective resources for KG construction on their own.
+Our framework represents a departure from traditional approaches and
+offers a fully symbolic interpretation of the LM, providing new insights
+into its knowledge capabilities.
