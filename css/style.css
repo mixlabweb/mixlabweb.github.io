@@ -1887,10 +1887,12 @@ article {
     font-style: italic; }
   .markdown strong {
     font-weight: 700; }
-  .markdown figure img {
+  .markdown img {
     display: block;
     margin: 0 auto;
-    max-width: 100%; }
+    max-width: 100%;
+    width: auto;
+    object-fit: contain; }
   .markdown figure figcaption {
     text-align: center;
     margin-top: 1rem; }
