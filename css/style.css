@@ -975,13 +975,13 @@ pre, code {
     font-weight: bold; }
 
 .nav {
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding-top: 1rem; }
-  @media (min-width: 732px) {
+  @media (min-width: 752px) {
     .nav {
       justify-content: space-between;
       flex-direction: row; } }
@@ -1002,7 +1002,7 @@ pre, code {
     .nav .header-logo .separator {
       margin-bottom: 4px;
       display: none; }
-      @media (min-width: 732px) {
+      @media (min-width: 752px) {
         .nav .header-logo .separator {
           display: block; } }
     .nav .header-logo .header-theme-icon {
@@ -1012,7 +1012,7 @@ pre, code {
   .nav .header-theme-switcher {
     cursor: pointer; }
   .nav .header-item {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     padding: 0.25rem;
     border-radius: 4px;
     height: fit-content; }
@@ -1026,7 +1026,7 @@ pre, code {
     display: flex;
     transform: translateX(-4px);
     justify-content: space-between; }
-    @media (min-width: 732px) {
+    @media (min-width: 752px) {
       .nav .header-items-container {
         transform: none;
         justify-content: right;
@@ -1521,7 +1521,7 @@ footer {
     margin-bottom: 0.5rem;
     color: var(--gray11);
     font-size: 0.875rem; }
-    @media (min-width: 732px) {
+    @media (min-width: 752px) {
       .post-meta .post-meta-details {
         gap: 1rem;
         flex-direction: row;
@@ -1788,7 +1788,7 @@ article {
   margin-left: auto;
   margin-right: auto;
   font-kerning: normal;
-  font-size: 1.05rem; }
+  font-size: 1.1rem; }
   .markdown .katex-display > .katex {
     max-width: 100%; }
   .markdown .katex-display > .katex > .katex-html {
@@ -1812,12 +1812,12 @@ article {
     line-height: 1em;
     margin: 1em 0 0.4em 0; }
   .markdown h3 {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 1em;
     line-height: 1em;
     margin: 1em 0 0.3em 0;
     text-transform: uppercase;
-    letter-spacing: 0.1em; }
+    letter-spacing: 0.05em; }
   .markdown h4 {
     font-weight: 600;
     font-size: 1em;
@@ -1839,7 +1839,7 @@ article {
     width: 30%;
     min-width: 160px;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     padding: 1em;
     background: var(--gray1);
     border: 2px solid var(--gray12);
@@ -1877,7 +1877,7 @@ article {
     background-color: var(--gray3);
     color: var(--gray12);
     padding: 1em;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     border-radius: 4px;
     overflow: auto;
     margin-bottom: 1rem; }
@@ -1897,7 +1897,7 @@ article {
     text-align: center;
     margin-top: 1rem; }
   .markdown figure figcaption::before {
-    content: "Figure: ";
+    content: "Figure ";
     font-weight: 700; }
   .markdown table img {
     display: inline-block;
@@ -3655,17 +3655,17 @@ article {
     .toc ol li a {
       display: flex;
       display: -webkit-flex; }
-  @media (min-width: 1180px) {
+  @media (min-width: 1200px) {
     .toc {
       padding-top: 0;
       position: fixed;
       top: 16%;
       right: 50%;
-      margin-right: calc(700px / 2 + 1rem);
+      margin-right: calc(720px / 2 + 1rem);
       width: 208px;
       max-height: 80vh;
       overflow-y: auto; } }
-@media (min-width: 1180px) {
+@media (min-width: 1200px) {
   .toc > .toc-list {
     overflow: hidden;
     position: relative; }
@@ -3692,10 +3692,10 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  max-width: 700px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 1rem; }
-  @media (min-width: 732px) {
+  @media (min-width: 752px) {
     body {
       padding: 0; } }
 .content {
