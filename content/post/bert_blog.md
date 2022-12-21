@@ -1,6 +1,6 @@
 ---
-title: "Harvesting Symbolic Knowledge Graphs from Neural Pretrained Language Models"
-date: 2022-12-13T11:15:33-07:00
+title: "Black boxes know a lot – Harvesting Symbolic Knowledge Graphs from neural language models"
+date: 2022-12-20T11:15:33-07:00
 draft: False
 author: Shibo Hao
 categories:
