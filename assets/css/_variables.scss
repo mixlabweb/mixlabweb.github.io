@@ -55,7 +55,7 @@
         @import "syntax-dark";
 }
 
-$page-width: 700px;
+$page-width: 720px;
 $toc-width: 240px;
 
 $breakpoints: (
@@ -64,7 +64,7 @@ $breakpoints: (
         'large':  ( min-width: 1200px )
 ) !default;
 
-$font-size-base: 1.05rem; // Assumes the browser default, typically `16px`
+$font-size-base: 1.10rem; // Assumes the browser default, typically `16px`
 $font-size-lg: 1.25rem;
 $font-size-sm: .875rem;
 $font-size-xs: .75rem;
